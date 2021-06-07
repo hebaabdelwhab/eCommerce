@@ -1,28 +1,72 @@
 package com.example.ecommerce;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.ecommerce.Models.Cart;
+import com.example.ecommerce.Prevalent.Prevalent;
+import com.example.ecommerce.ViewHolder.CartViewHolder;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.jetbrains.annotations.NotNull;
+
 public class CartActivity extends AppCompatActivity {
-    private RecyclerView TheRecyclerView ;
+    private RecyclerView recyclerView;
     private RecyclerView.LayoutManager TheLayoutManager;
     private Button nextProgressbtn;
     private TextView TotalCost;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
         //step1
-        TheRecyclerView = findViewById(R.id.cart_List);
-        TheRecyclerView.setHasFixedSize(true);
+        recyclerView = findViewById(R.id.cart_List);
+        recyclerView.setHasFixedSize(true);
         TheLayoutManager = new LinearLayoutManager(this);
-        TheRecyclerView.setLayoutManager(TheLayoutManager);
+        recyclerView.setLayoutManager(TheLayoutManager);
+
         nextProgressbtn = findViewById(R.id.next_Process_btn);
         TotalCost = findViewById(R.id.TotalPrice);
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
+        FirebaseRecyclerOptions<Cart> options = new FirebaseRecyclerOptions.Builder<Cart>()
+                .setQuery(cartListRef.child("User View")
+                        .child(Prevalent.currentOnlineUser.getPhone())
+                        .child("Products"),Cart.class)
+                        .build();
+        FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter =
+            new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options){
+            @Override
+            protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull @NotNull Cart model) {
+                  holder.txtProductName.setText(model.getPname());
+                  holder.txtProductPrice.setText(model.getPrice());
+                  holder.txtProductQuantity.setText(model.getQuantity());
+            }
+            @NotNull
+            @Override
+            public CartViewHolder onCreateViewHolder(@NonNull  ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_items_layout, parent, false);
+                CartViewHolder holder = new CartViewHolder(view);
+                return holder;
+            }
+        };
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
     }
 }

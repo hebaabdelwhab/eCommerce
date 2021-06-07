@@ -20,13 +20,13 @@
 
     </com.google.android.material.appbar.AppBarLayout>
     <include layout="@layout/content_home" />
-    <com.rey.material.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:elevation="6dp"
-        app:fab_iconSrc="@drawable/nav_cart"
-        app:fab_backgroundColor="@color/colorPrimary"/>
+        android:src="@drawable/nav_cart"
+        android:backgroundTint="@color/colorPrimary"
         android:layout_margin="15dp" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

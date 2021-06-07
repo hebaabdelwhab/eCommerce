@@ -124,7 +124,6 @@ public class RegisterActivity extends AppCompatActivity
                     startActivity(intent);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
