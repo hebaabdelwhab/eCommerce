@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProductDetailsActivity">
+
+   <ImageView
+        android:id="@+id/product_image_details"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:scaleType="centerCrop"/>
+   <TextView
+       android:id="@+id/Product_name_details"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/product_image_details"
+       android:text="Product Name"
+       android:textColor="@android:color/black"
+       android:textStyle="bold"
+       android:textSize="18sp"
+       android:gravity="center"
+       android:layout_marginTop="10dp"/>
+   <TextView
+       android:id="@+id/Product_Description_Details"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/Product_name_details"
+       android:text="Product Description"
+       android:textColor="@android:color/black"
+       android:textStyle="bold"
+       android:textSize="16sp"
+       android:gravity="center"
+       android:layout_marginTop="10dp"/>
+   <TextView
+       android:id="@+id/product_Price_Details"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/Product_Description_Details"
+       android:text="Product Price"
+       android:textColor="@android:color/black"
+       android:textStyle="bold"
+       android:textSize="16sp"
+       android:gravity="center"
+       android:layout_marginTop="10dp"/>
+   <Button
+       android:id="@+id/DecrementBTN"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="-"
+       android:textSize="30dp"
+       android:background="@color/colorPrimary"
+       android:layout_below="@+id/product_Price_Details"
+       android:layout_alignParentLeft="true"/>
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="0"
+       android:layout_below="@+id/product_Price_Details"
+       android:textSize="50dp"
+       android:layout_centerInParent="true"
+       android:id="@+id/Value_Product"/>
+   <Button
+       android:id="@+id/IcrementBtn"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="+"
+       android:textSize="30dp"
+       android:background="@color/colorPrimary"
+       android:layout_below="@+id/product_Price_Details"
+       android:layout_alignParentRight="true"/>
+   <Button
+       android:id="@+id/pd_add_to_cart_button"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:background="@color/colorPrimary"
+       android:layout_margin="15dp"
+       android:layout_alignParentBottom="true"
+       android:text="Add to cart"
+       android:textColor="@android:color/white"
+       android:textSize="18dp"/>
+</RelativeLayout>
