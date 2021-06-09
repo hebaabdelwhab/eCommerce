@@ -1,10 +1,13 @@
 package com.example.ecommerce.Models;
 
 public class Cart {
-    private  String pid ,pname, price,quantity , discount;
-    public  Cart(){}
+    private  String pid ,pname, price,discount;
+    int quantity;
 
-    public Cart(String pid, String pname, String price, String quantity, String discount) {
+    public Cart() {
+    }
+
+    public Cart(String pid, String pname, String price, int quantity, String discount) {
         this.pid = pid;
         this.pname = pname;
         this.price = price;
@@ -36,11 +39,11 @@ public class Cart {
         this.price = price;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 

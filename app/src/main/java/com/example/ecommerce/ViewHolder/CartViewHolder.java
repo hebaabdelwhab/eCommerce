@@ -1,4 +1,5 @@
 package com.example.ecommerce.ViewHolder;
+
 import android.view.View;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -7,11 +8,11 @@ import com.example.ecommerce.Interface.ItemClickListner;
 import com.example.ecommerce.R;
 import org.jetbrains.annotations.NotNull;
 
-public class CartViewHolder  extends RecyclerView.ViewHolder implements View.OnClickListener{
+public class CartViewHolder  extends RecyclerView.ViewHolder implements View.OnClickListener {
     public TextView txtProductName ,txtProductPrice ,txtProductQuantity ;
     private ItemClickListner itemClickListner;
 
-    public CartViewHolder(@NonNull @NotNull View itemView) {
+    public CartViewHolder(@NonNull View itemView) {
         super(itemView);
         txtProductName = itemView.findViewById(R.id.Cart_Product_name);
         txtProductPrice = itemView.findViewById(R.id.Cart_Product_Price);

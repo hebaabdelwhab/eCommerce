@@ -91,7 +91,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         cartMap.put("time",saveCurrentTime);
         cartMap.put("quantity",count);
         cartMap.put("discount","");
-        cartListRef.child("User View").child(Prevalent.currentOnlineUser.getPhone()).child("Products").child(productId).updateChildren(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+        cartListRef.child("User View").child(Prevalent.currentOnlineUser.getPhone()).child("Product").child(productId).updateChildren(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<Void> task) {
                 if(task.isSuccessful())

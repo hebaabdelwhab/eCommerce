@@ -28,7 +28,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/RL11"
         android:layout_above="@+id/next_Process_btn"
-        />
+        ></androidx.recyclerview.widget.RecyclerView>
     <Button
         android:id="@+id/next_Process_btn"
         android:layout_width="match_parent"
