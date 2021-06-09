@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -45,8 +48,12 @@ public class ConfirmFinalOrderActivity extends AppCompatActivity implements Loca
     private  EditText nameEditText , PhoneEditText , AddressEditText , CityEditText;
     private Button ConfirmBtn,GeogleMapBtn;
     private  String TotalPrice ="";
-    TextView mapaddress;
+    private  EditText BirthdayEditText;
+    //for graph
     LocationManager locationManager;
+    //for caleder;
+    Calendar mCurrentDate;
+    int day , month , year;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +73,26 @@ public class ConfirmFinalOrderActivity extends AppCompatActivity implements Loca
          CityEditText = findViewById(R.id.shippment_City_name);
          ConfirmBtn = findViewById(R.id.Confirm_final_order_btn);
          GeogleMapBtn = findViewById(R.id.GetLocation_btn);
-         mapaddress = findViewById(R.id.mapaddress);
+         //for calender ;
+         BirthdayEditText = findViewById(R.id.Birthday);
+         mCurrentDate = Calendar.getInstance();
+         day = mCurrentDate.get(Calendar.DAY_OF_MONTH);
+         month = mCurrentDate.get(Calendar.MONTH);
+         year = mCurrentDate.get(Calendar.YEAR);
+         month = month+1;
+        BirthdayEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(ConfirmFinalOrderActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        month = month +1;
+                        BirthdayEditText.setText(dayOfMonth+"/"+month+"/"+year);
+                    }
+                },year,month,day);
+                datePickerDialog.show();
+             }
+        });
          //-----------------------------------------------------
          //Step[2]
          ConfirmBtn.setOnClickListener(new View.OnClickListener() {
@@ -140,6 +166,10 @@ public class ConfirmFinalOrderActivity extends AppCompatActivity implements Loca
          {
              Toast.makeText(this, "Please provide your City.", Toast.LENGTH_SHORT).show();
          }
+         else if(TextUtils.isEmpty(BirthdayEditText.getText().toString()))
+         {
+             Toast.makeText(this, "Please Enter your birth day.", Toast.LENGTH_SHORT).show();
+         }
          else 
          {
              confirm();
@@ -164,6 +194,8 @@ public class ConfirmFinalOrderActivity extends AppCompatActivity implements Loca
         OrderMap.put("date",saveCurrentDate);
         OrderMap.put("time",saveCurrentTime);
         OrderMap.put("state","notshipped");
+        OrderMap.put("birthday",BirthdayEditText.getText().toString());
+
         cartListRef.updateChildren(OrderMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<Void> task) {
