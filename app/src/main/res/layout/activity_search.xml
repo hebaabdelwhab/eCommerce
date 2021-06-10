@@ -25,19 +25,28 @@
             android:layout_marginStart="5dp"
             android:layout_centerVertical="true"
             />
-    <Button
-        android:id="@+id/Search_BTN"
-        android:layout_toRightOf="@+id/Search_Product_name"
-        android:textStyle="bold"
-        android:textSize="16dp"
-        android:textColor="@color/white"
-        android:text="Search"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:background="@color/colorPrimary"
-        android:padding="9dp"
-        android:layout_centerInParent="true"
-        />
+
+        <Button
+            android:id="@+id/Search_Voice_BTN"
+            android:layout_width="43dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="-45dp"
+            android:layout_toRightOf="@+id/Search_Product_name"
+            android:background="@drawable/mic" />
+
+        <Button
+            android:id="@+id/Search_BTN"
+            android:layout_width="133dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="11dp"
+            android:layout_toRightOf="@+id/Search_Voice_BTN"
+            android:background="@color/colorPrimary"
+            android:padding="9dp"
+            android:text="Search"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:textStyle="bold" />
     </RelativeLayout>
 <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/Search_List"

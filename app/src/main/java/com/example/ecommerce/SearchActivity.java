@@ -1,6 +1,7 @@
 package com.example.ecommerce;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +33,14 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 public class SearchActivity extends AppCompatActivity {
-    private Button SearchBtn;
+    private Button SearchBtn,Search_Voice_BTN;
     private EditText inputProduct;
     private RecyclerView SearchList;
     private String SearchInput;
+    private  static  final  int RecognizerResult=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +49,17 @@ public class SearchActivity extends AppCompatActivity {
         inputProduct = findViewById(R.id.Search_Product_name);
         SearchBtn = findViewById(R.id.Search_BTN);
         SearchList = findViewById(R.id.Search_List);
+        Search_Voice_BTN = findViewById(R.id.Search_Voice_BTN);
         SearchList.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
+        Search_Voice_BTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent SpeechIntent  = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                SpeechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                SpeechIntent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Speech to text");
+                startActivityForResult(SpeechIntent,RecognizerResult);
+            }
+        });
         SearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +69,17 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        if(requestCode==RecognizerResult&&resultCode==RESULT_OK)
+        {
+            ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            inputProduct.setText(matches.get(0).toString());
+            SearchInput = matches.get(0).toString();
+            onStart();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
     @Override
     protected void onStart() {
         super.onStart();
