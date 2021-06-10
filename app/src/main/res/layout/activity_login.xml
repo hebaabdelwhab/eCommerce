@@ -69,7 +69,6 @@
             android:textSize="18sp"
             android:layout_marginLeft="17dp"
             />
-
         <TextView
             android:id="@+id/forget_password_link"
             android:layout_width="wrap_content"

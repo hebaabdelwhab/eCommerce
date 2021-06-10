@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.rey.material.widget.CheckBox;
+
 import io.paperdb.Paper;
 
 public class LoginActivity extends AppCompatActivity
@@ -26,17 +27,19 @@ public class LoginActivity extends AppCompatActivity
     private EditText InputPhoneNumber, InputPassword;
     private Button LoginButton;
     private ProgressDialog loadingBar;
-    private TextView AdminLink, NotAdminLink;
+    private TextView AdminLink, NotAdminLink,forget_password_link;
 
     private String parentDbName = "Users";
     private CheckBox chkBoxRememberMe;
-
-
+    String PhotoNumber="";
+    int Check = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //Step[1]
+        forget_password_link = findViewById(R.id.forget_password_link);
         LoginButton = (Button) findViewById(R.id.login_btn);
         InputPassword = (EditText) findViewById(R.id.login_password_input);
         InputPhoneNumber = (EditText) findViewById(R.id.login_phone_number_input);
@@ -45,10 +48,19 @@ public class LoginActivity extends AppCompatActivity
         loadingBar = new ProgressDialog(this);
 
 
-        chkBoxRememberMe = (CheckBox) findViewById(R.id.remember_me_chkb);
+        chkBoxRememberMe = findViewById(R.id.remember_me_chkb);
+
         Paper.init(this);
 
-
+        forget_password_link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent TheIntent  = new Intent(LoginActivity.this , resetPasswordActivity.class);
+                TheIntent.putExtra("PhotoNumber" , PhotoNumber);
+                TheIntent.putExtra("parent" , parentDbName);
+                startActivity(TheIntent);
+            }
+        });
         LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -56,7 +68,6 @@ public class LoginActivity extends AppCompatActivity
                 LoginUser();
             }
         });
-
         AdminLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -79,9 +90,6 @@ public class LoginActivity extends AppCompatActivity
             }
         });
     }
-
-
-
     private void LoginUser()
     {
         String phone = InputPhoneNumber.getText().toString();
@@ -114,8 +122,6 @@ public class LoginActivity extends AppCompatActivity
             Paper.book().write(Prevalent.UserPhoneKey, phone);
             Paper.book().write(Prevalent.UserPasswordKey, password);
         }
-
-
         final DatabaseReference RootRef;
         RootRef = FirebaseDatabase.getInstance().getReference();
 
@@ -147,13 +153,16 @@ public class LoginActivity extends AppCompatActivity
 
                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                 Prevalent.currentOnlineUser = usersData;
+                                Prevalent.UserPasswordKey   = password;
                                 startActivity(intent);
                             }
                         }
                         else
                         {
                             loadingBar.dismiss();
+                            PhotoNumber = phone;
                             Toast.makeText(LoginActivity.this, "Password is incorrect.", Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 }
@@ -163,7 +172,6 @@ public class LoginActivity extends AppCompatActivity
                     loadingBar.dismiss();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
