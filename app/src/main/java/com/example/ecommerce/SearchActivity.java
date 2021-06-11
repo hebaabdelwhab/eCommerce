@@ -36,10 +36,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
-    private Button SearchBtn,Search_Voice_BTN;
+    private Button SearchBtn,Search_Voice_BTN,Search_Scanner_BTN;
     private EditText inputProduct;
     private RecyclerView SearchList;
     private String SearchInput;
+    int check=0;
     private  static  final  int RecognizerResult=1;
 
     @Override
@@ -50,7 +51,17 @@ public class SearchActivity extends AppCompatActivity {
         SearchBtn = findViewById(R.id.Search_BTN);
         SearchList = findViewById(R.id.Search_List);
         Search_Voice_BTN = findViewById(R.id.Search_Voice_BTN);
+        Search_Scanner_BTN = findViewById(R.id.Search_Scanner_BTN);
         SearchList.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
+        //Step[2];
+        //search Scanning barcode;
+        Search_Scanner_BTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(getApplicationContext(),CameraScannerActivity.class),11);
+            }
+        });
+        //Search by Voice;
         Search_Voice_BTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,9 +79,9 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==RecognizerResult&&resultCode==RESULT_OK)
         {
             ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
@@ -78,7 +89,12 @@ public class SearchActivity extends AppCompatActivity {
             SearchInput = matches.get(0).toString();
             onStart();
         }
-        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==11&&resultCode==RESULT_OK)
+        {
+            inputProduct.setText(data.getStringExtra("heba").toString());
+            SearchInput =data.getStringExtra("heba").toString();
+            onStart();
+        }
     }
     @Override
     protected void onStart() {
