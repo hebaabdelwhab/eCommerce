@@ -123,8 +123,8 @@ public class SearchActivity extends AppCompatActivity {
                         holder.txtProductPrice.setText("Price = " + model.getPrice() + "$");
                         Picasso.get().load(model.getImage()).into(holder.imageView);
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
+                        @Override
+                        public void onClick(View v) {
                                 Intent TheIntent  = new Intent(SearchActivity.this , ProductDetailsActivity.class);
                                 TheIntent.putExtra("pid" , model.getPid());
                                 startActivity(TheIntent);
