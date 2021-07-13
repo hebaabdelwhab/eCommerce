@@ -1,4 +1,4 @@
-1)Sign Up & Login Facilities.
+#Sign Up & Login Facilities.
 2)Facility to navigate categories and products.
 3)Facility to search by text ,voice & barcode(using camera).
 4)Facility to add several products to shopping cart.
