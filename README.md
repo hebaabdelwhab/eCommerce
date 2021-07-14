@@ -1,2 +1,2 @@
 #Sign Up & Login Facilitie, Facility to navigate categories and products,Facility to search by text ,voice & barcode(using camera),Facility to add several products to shopping cart,Facility to add , remove and edit quantities of products in the shopping cart,
-,Facility to show order total before submission,Facility to determine location of delivery by GPS/Google Maps,Define customer's birthdate using calendar,Remember me & forget password recovery facility,
+,Facility to show order total before submission,Facility to determine location of delivery by GPS/Google Maps,Define customer's birthdate using calendar,Remember me & forget password recovery facility,Remember me&forget password recovery facilities , connect to server DB through web services.
